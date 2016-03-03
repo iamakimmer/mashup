@@ -2,16 +2,18 @@
   var $token = $('#token');
   var $album = $('#album');
   var $albumlist = $('#albumlist');
-  
+  var $instagramDetails = $('#instagramdetails');
+
     function findTagFromInstagram(tag) {
       console.log('tag', tag);
       $.ajax({
         url: 'https://api.instagram.com/v1/tags/' + tag + '/media/recent?client_id=ce95cb4e56c146c994457b48a839f6a8',
         dataType: 'jsonp',
         success: function(result) {
+          $instagramDetails.html('');
           for (var i = 0; i < result.data.length; i++) {
             var url = result.data[i].images.thumbnail.url;
-            $('#instagramdetails').append('<img src="' + url + '"/>');
+            $instagramDetails.append('<img src="' + url + '"/>');
           }
         }
       });
@@ -29,7 +31,6 @@
         success: function(data, status) {
           $album.html('');
           $albumlist.html('');
-          $('#instagramdetails').html('');
 
           data.albums.items.forEach(function(album) {
             var name = album.name.replace(/[^A-Z0-9]/ig, '');   
