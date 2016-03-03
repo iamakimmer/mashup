@@ -3,7 +3,7 @@
   var $album = $('#album');
   var $albumlist = $('#albumlist');
   var $instagramDetails = $('#instagramdetails');
-
+  
     function findTagFromInstagram(tag) {
       console.log('tag', tag);
       $.ajax({
@@ -53,7 +53,7 @@
           alert(data.responseJSON.error.message);
         },
         beforeSend: function(xhr, settings) {
-          xhr.setRequestHeader('Authorization', 'Bearer ' + ($token.val() || 'BQCji1gxtAqV6vaAid6nhoWGils9I1EfugDIsbNhQ7dchqFPLuxPO73VXywbEggqfrOgvP8oSPISxN3tPwHBNuPyR7lgteyWKwWf8ujnZSsG2O22UNk-LkasK0Evh2Z--0jbPfFVD-wH_Q');
+          xhr.setRequestHeader('Authorization', 'Bearer ' + $token.val());
         }
       });
     });
