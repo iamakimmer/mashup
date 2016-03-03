@@ -2,7 +2,25 @@
 <html>
   <head>
     <title>Mashup</title>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
+		<div class="container">
+		  <div class="row">
+		    <a href="https://developer.spotify.com/web-api/console/get-new-releases/">Spotify Oauth Token: </a>
+		    <input type="text" id="token" />
+		    <button id="submit" class="btn btn-primary">Submit</button>
+		  </div>
+
+		  <div class="wrapper">
+		    <div id="album">
+		    </div>
+		    <div id="instagramdetails">
+		    </div>
+		  </div>
+		</div>  	
+		<script type="text/javascript" src="index.js"></script>
   </body>
 </html>
