@@ -1,8 +1,10 @@
 
-    var token = $('#token');
-    var album = $('#album');
-
+  var $token = $('#token');
+  var $album = $('#album');
+  var $albumlist = $('#albumlist');
+  
     function findTagFromInstagram(tag) {
+      console.log('tag', tag);
       $.ajax({
         url: 'https://api.instagram.com/v1/tags/' + tag + '/media/recent?client_id=ce95cb4e56c146c994457b48a839f6a8',
         dataType: 'jsonp',
@@ -15,25 +17,42 @@
       });
     };
 
+
     $('#submit').on('click', function() {
       $.ajax({
         url: "https://api.spotify.com/v1/browse/new-releases",
         dataType: 'json',
         data: {
           country: 'US',
-          limit: 1
+          limit: 10
         },
         success: function(data, status) {
-          var iframe = '<iframe class="spotifylink" src="https://embed.spotify.com/?uri=' + data.albums.items[0].uri + '&" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>';
-          album.html(iframe);
-          var albumName = data.albums.items[0].name.replace(/[^A-Z0-9]/ig, '');          
-          findTagFromInstagram(albumName);
+          $album.html('');
+          $albumlist.html('');
+          $('#instagramdetails').html('');
+
+          data.albums.items.forEach(function(album) {
+            var name = album.name.replace(/[^A-Z0-9]/ig, '');   
+            var $imageCover = $('<img class="albumcover" data-name="' + name + '" data-uri="' + album.uri + '" width="100" height="100" src="' + album.images[0].url + '"/>');
+            $albumlist.append($imageCover);
+            $imageCover.on('click', function() {
+              var image = $(this);
+              var uri = image.data('uri');
+              var name = image.data('name');
+              var iframe = '<iframe class="spotifylink" src="https://embed.spotify.com/?uri=' + uri + '&" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>';
+              $album.html(iframe);
+              var albumName = name;     
+              findTagFromInstagram(albumName);    
+            });            
+          });
+
+          
         },
         error: function(data) {
           alert(data.responseJSON.error.message);
         },
         beforeSend: function(xhr, settings) {
-          xhr.setRequestHeader('Authorization', 'Bearer ' + token.val());
+          xhr.setRequestHeader('Authorization', 'Bearer ' + $token.val());
         }
       });
-  });
+    });
